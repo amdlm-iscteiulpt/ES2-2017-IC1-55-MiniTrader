@@ -10,7 +10,8 @@ import mt.comm.ServerSideMessage;
 import mt.comm.ServerSideMessage.Type;
 
 public class AnalyticsFilter implements ServerComm {
-
+	
+	//novo comentario
 	private ServerComm decoratedServerComm;
 	private int buyOrders = 0;
 	private int sellOrders = 0;
