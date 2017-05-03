@@ -242,8 +242,7 @@ public class MicroServer implements MicroTraderServer {
 		// reset the set of changed orders
 		updatedOrders = new HashSet<>();
 		
-		XmlProject x= new XmlProject();
-		x.transactionsXml(o);
+	
 	}
 	
 	/**
