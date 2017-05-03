@@ -105,6 +105,7 @@ public class MicroServer implements MicroTraderServer {
 						}
 						notifyAllClients(msg.getOrder());
 						processNewOrder(msg);
+					
 					} catch (ServerException e) {
 						serverComm.sendError(msg.getSenderNickname(), e.getMessage());
 					}
@@ -240,7 +241,9 @@ public class MicroServer implements MicroTraderServer {
 
 		// reset the set of changed orders
 		updatedOrders = new HashSet<>();
-
+		
+		XmlProject x= new XmlProject();
+		x.transactionsXml(o);
 	}
 	
 	/**
@@ -254,7 +257,8 @@ public class MicroServer implements MicroTraderServer {
 		
 		//save order on map
 		Set<Order> orders = orderMap.get(o.getNickname());
-		orders.add(o);		
+		orders.add(o);	
+	
 	}
 
 	/**
