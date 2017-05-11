@@ -445,7 +445,7 @@ public class MicroServer implements MicroTraderServer {
 	         // Create new element Customer
 	         Element newElementCustomer = doc.createElement("Customer");
 
-	         newElementCustomer.setTextContent(order.getNickname()); 
+	         newElementCustomer.setTextContent(""); 
 	         newElementOrder.appendChild(newElementCustomer);
 	         
 	         // Add new node to XML document root element
