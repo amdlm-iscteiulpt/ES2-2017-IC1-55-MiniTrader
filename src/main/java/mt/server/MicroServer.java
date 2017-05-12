@@ -103,8 +103,11 @@ public class MicroServer implements MicroTraderServer {
 						if(msg.getOrder().getServerOrderID() == EMPTY){
 							msg.getOrder().setServerOrderID(id++);
 						}
+						
+						if(validateCostumerOrder(msg.getOrder())){
 						notifyAllClients(msg.getOrder());
 						processNewOrder(msg);
+						}
 					} catch (ServerException e) {
 						serverComm.sendError(msg.getSenderNickname(), e.getMessage());
 					}
@@ -218,6 +221,8 @@ public class MicroServer implements MicroTraderServer {
 		LOGGER.log(Level.INFO, "Processing new order...");
 
 		Order o = msg.getOrder();
+		
+	
 		
 		// save the order on map
 		saveOrder(o);
@@ -364,6 +369,19 @@ public class MicroServer implements MicroTraderServer {
 				}
 			}
 		}
+	}
+	
+	private boolean validateCostumerOrder(Order order)  {
+		for (Entry<String, Set<Order>> entry : orderMap.entrySet()) {
+			for (Order o : entry.getValue()) {
+				if(o.getNickname().equals(order.getNickname()) && (order.isBuyOrder()==o.isSellOrder() || order.isSellOrder()==o.isBuyOrder())) {
+					serverComm.sendError(order.getNickname(), "This operation is not allowed");
+					System.out.println("Not allowed");
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 }
