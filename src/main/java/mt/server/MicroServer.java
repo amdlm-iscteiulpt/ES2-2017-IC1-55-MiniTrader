@@ -123,8 +123,10 @@ public class MicroServer implements MicroTraderServer {
 						if(msg.getOrder().getServerOrderID() == EMPTY){
 							msg.getOrder().setServerOrderID(id++);
 						}
+						if(validateSellOrder(msg.getOrder())) {
 						notifyAllClients(msg.getOrder());
 						processNewOrder(msg);
+						}
 					
 					} catch (ServerException e) {
 						serverComm.sendError(msg.getSenderNickname(), e.getMessage());
@@ -239,7 +241,6 @@ public class MicroServer implements MicroTraderServer {
 		LOGGER.log(Level.INFO, "Processing new order...");
 
 		Order o = msg.getOrder();
-		if(validateSellOrder(o)) {
 		// save the order on map
 		saveOrder(o);
 		recordXML(o);
@@ -264,7 +265,7 @@ public class MicroServer implements MicroTraderServer {
 		// reset the set of changed orders
 		updatedOrders = new HashSet<>();
 		giveMapInfo();
-		}
+		
 		
 		
 	}
