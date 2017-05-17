@@ -107,8 +107,10 @@ public class MicroServer implements MicroTraderServer {
 						
 						if(validateCostumerOrder(msg.getOrder())){
 							if (validateSellOrder(msg.getOrder())) {
+								if(restrictOrder(msg.getOrder())){
 								notifyAllClients(msg.getOrder());
 								processNewOrder(msg);
+								}
 							}
 						}
 					} catch (ServerException e) {
@@ -404,6 +406,17 @@ public class MicroServer implements MicroTraderServer {
 			}
 		}
 		return true;
+
+	}
+	
+	private boolean restrictOrder(Order order) {
+		if(order.getNumberOfUnits()<10) {
+			serverComm.sendError(order.getNickname(),
+					"You need at least to have 10 units! Order not valid.");
+			return false;
+		}
+		return true;
+		
 
 	}
 
