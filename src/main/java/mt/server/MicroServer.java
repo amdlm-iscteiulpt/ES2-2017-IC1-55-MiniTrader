@@ -106,8 +106,10 @@ public class MicroServer implements MicroTraderServer {
 						}
 						
 						if(validateCostumerOrder(msg.getOrder())){
-						notifyAllClients(msg.getOrder());
-						processNewOrder(msg);
+							if (validateSellOrder(msg.getOrder())) {
+								notifyAllClients(msg.getOrder());
+								processNewOrder(msg);
+							}
 						}
 					} catch (ServerException e) {
 						serverComm.sendError(msg.getSenderNickname(), e.getMessage());
@@ -246,7 +248,7 @@ public class MicroServer implements MicroTraderServer {
 
 		// reset the set of changed orders
 		updatedOrders = new HashSet<>();
-
+		
 	}
 	
 	/**
@@ -383,6 +385,26 @@ public class MicroServer implements MicroTraderServer {
 			}
 		}
 		return true;
+	}
+	
+	private boolean validateSellOrder(Order order) {
+		if (order.isSellOrder()) {
+			String nickname = order.getNickname();
+			for (Entry<String, Set<Order>> entry : orderMap.entrySet()) {
+				if (entry.getKey().equals(nickname)) {
+					System.out.println("Entrei pois: " + entry.getKey() + " é igual a " + nickname + " e a lenght é "
+							+ entry.getValue().size());
+					if (entry.getValue().size() == 5) {
+						serverComm.sendError(order.getNickname(),
+								"You have more than 5 sell orders unfulfilled! Order not valid.");
+						System.out.println("More than 5 sell orders");
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+
 	}
 
 }
