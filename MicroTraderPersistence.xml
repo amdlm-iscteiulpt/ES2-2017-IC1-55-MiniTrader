@@ -15,4 +15,25 @@
 <Order Id="5" Price="10.0" Stock="ping4" Type="Sell" Units="10">
 <Customer/>
 </Order>
+<Order Id="1" Price="10.0" Stock="valve" Type="Sell" Units="10">
+<Customer/>
+</Order>
+<Order Id="1" Price="10.0" Stock="ten" Type="Buy" Units="10">
+<Customer/>
+</Order>
+<Order Id="2" Price="10.0" Stock="valve" Type="Sell" Units="10">
+<Customer/>
+</Order>
+<Order Id="3" Price="10.0" Stock="valve" Type="Sell" Units="10">
+<Customer/>
+</Order>
+<Order Id="4" Price="10.0" Stock="valve" Type="Sell" Units="10">
+<Customer/>
+</Order>
+<Order Id="5" Price="10.0" Stock="valve" Type="Sell" Units="10">
+<Customer/>
+</Order>
+<Order Id="6" Price="10.0" Stock="valve" Type="Sell" Units="10">
+<Customer/>
+</Order>
 </XML>
