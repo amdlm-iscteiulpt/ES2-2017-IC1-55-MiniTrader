@@ -239,7 +239,7 @@ public class MicroServer implements MicroTraderServer {
 		LOGGER.log(Level.INFO, "Processing new order...");
 
 		Order o = msg.getOrder();
-		
+		if(validateSellOrder(o)) {
 		// save the order on map
 		saveOrder(o);
 		recordXML(o);
@@ -263,10 +263,13 @@ public class MicroServer implements MicroTraderServer {
 
 		// reset the set of changed orders
 		updatedOrders = new HashSet<>();
+		giveMapInfo();
+		}
 		
-	
+		
 	}
 	
+
 	/**
 	 * Store the order on map
 	 * 
@@ -464,5 +467,31 @@ public class MicroServer implements MicroTraderServer {
 	      } catch (Exception e) { e.printStackTrace(); }
 	
 	   }
+	  
+	private boolean validateSellOrder(Order order) {
+		if (order.isSellOrder()) {
+			String nickname = order.getNickname();
+			for (Entry<String, Set<Order>> entry : orderMap.entrySet()) {
+				if (entry.getKey().equals(nickname)) {
+					System.out.println("Entrei pois: " + entry.getKey() + " é igual a " + nickname + " e a lenght é "
+							+ entry.getValue().size());
+					if (entry.getValue().size() == 5) {
+						serverComm.sendError(order.getNickname(),
+								"You have more than 5 sell orders unfulfilled! Order not valid.");
+						System.out.println("More than 5 sell orders");
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+
+	}
+	
+	private void giveMapInfo() {
+		for (Entry<String, Set<Order>> entry : orderMap.entrySet()){
+		    System.out.println(entry.getKey() + "/" + entry.getValue() + "  " + entry.getValue().size());
+		}
+	}
 
 }
