@@ -393,6 +393,11 @@ public class MicroServer implements MicroTraderServer {
 		}
 	}
 	
+	/**
+	 * Record the transaction in a XML document including sellers/buyers identification
+	 * 
+	 * @param order		Order received from the client
+	 */
 	  public static void recordXML(Order order){
 	      try {	
 	         File inputFile = new File("MicroTraderPersistence.xml");
@@ -466,7 +471,12 @@ public class MicroServer implements MicroTraderServer {
 	      } catch (Exception e) { e.printStackTrace(); }
 	
 	   }
-
+	  
+	  
+		/**
+		 * This method restrict the number of units
+		 * @return True if the number of Units of that order equals or is bigger than 10
+		 */
 		private boolean restrictOrder(Order order) {
 			if(order.getNumberOfUnits()<10) {
 				serverComm.sendError(order.getNickname(),
