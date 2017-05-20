@@ -267,7 +267,7 @@ public class MicroServer implements MicroTraderServer {
 
 		// reset the set of changed orders
 		updatedOrders = new HashSet<>();
-		giveMapInfo();
+
 		
 		
 		
@@ -398,6 +398,11 @@ public class MicroServer implements MicroTraderServer {
 		}
 	}
 	
+	/**
+	 * Record the transaction in a XML document excluding sellers/buyers identification
+	 * 
+	 * @param order		Order received from the client
+	 */
 	  public static void recordXML(Order order){
 	      try {	
 	         File inputFile = new File("MicroTraderPersistence.xml");
@@ -472,6 +477,11 @@ public class MicroServer implements MicroTraderServer {
 	
 	   }
 	  
+	  
+	  /**
+		 * This method restricts the number of unfulfilled sell orders to 5
+		 * @return True if the client doesn't have more than 5 unfulfilled sell orders
+		 */	  
 	private boolean validateSellOrder(Order order) {
 		if (order.isSellOrder()) {
 			String nickname = order.getNickname();
@@ -492,6 +502,11 @@ public class MicroServer implements MicroTraderServer {
 
 	}
 	
+
+/**
+		 * This method restrict the number of units
+		 * @return True if the number of Units of that order equals or is bigger than 10
+		 */
 	private boolean restrictOrder(Order order) {
 		if(order.getNumberOfUnits()<10) {
 			serverComm.sendError(order.getNickname(),
@@ -502,11 +517,6 @@ public class MicroServer implements MicroTraderServer {
 		
 
 	}
-	
-	private void giveMapInfo() {
-		for (Entry<String, Set<Order>> entry : orderMap.entrySet()){
-		    System.out.println(entry.getKey() + "/" + entry.getValue() + "  " + entry.getValue().size());
-		}
-	}
+
 
 }
