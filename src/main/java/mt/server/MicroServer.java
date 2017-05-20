@@ -378,7 +378,7 @@ public class MicroServer implements MicroTraderServer {
 	
 	/**
 	 * This method block the transaction if the seller/buyers is the same
-	 * @return True if the seller and the buyer are not the same person 
+	 * @return True if the seller and the buyer are not the same persons 
 	 */
 	private boolean validateCostumerOrder(Order order)  {
 		for (Entry<String, Set<Order>> entry : orderMap.entrySet()) {
