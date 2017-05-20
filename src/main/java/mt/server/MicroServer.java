@@ -376,6 +376,10 @@ public class MicroServer implements MicroTraderServer {
 		}
 	}
 	
+	/**
+	 * This method block the transaction if the seller/buyers is the same
+	 * @return True if the seller and the buyer are not the same person 
+	 */
 	private boolean validateCostumerOrder(Order order)  {
 		for (Entry<String, Set<Order>> entry : orderMap.entrySet()) {
 			for (Order o : entry.getValue()) {
@@ -389,6 +393,10 @@ public class MicroServer implements MicroTraderServer {
 		return true;
 	}
 	
+	/**
+	 * This method restricts the number of unfulfilled sell orders to 5
+	 * @return True if the client doesn't have more than 5 unfulfilled sell orders
+	 */
 	private boolean validateSellOrder(Order order) {
 		if (order.isSellOrder()) {
 			String nickname = order.getNickname();
@@ -409,6 +417,11 @@ public class MicroServer implements MicroTraderServer {
 
 	}
 	
+	
+	/**
+	 * This method restrict the number of units
+	 * @return True if the number of Units of that order equals or is bigger than 10
+	 */
 	private boolean restrictOrder(Order order) {
 		if(order.getNumberOfUnits()<10) {
 			serverComm.sendError(order.getNickname(),
