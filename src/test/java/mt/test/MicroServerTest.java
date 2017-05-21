@@ -11,8 +11,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-//import org.mockito.Mock;
-//import static org.mockito.Mockito.*;
+import org.mockito.Mock;
+import static org.mockito.Mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -22,7 +22,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MicroServerTest {
-	/*
+	
 	private MicroServer ms;
 	
 	@Mock
@@ -190,6 +190,4 @@ public class MicroServerTest {
 //		
 //		verify(serverComm, atLeastOnce()).sendOrder("userA", Order.createBuyOrder("userB", "ISCTE", 5, 21.0));
 //	}
- * */
- 
 }
