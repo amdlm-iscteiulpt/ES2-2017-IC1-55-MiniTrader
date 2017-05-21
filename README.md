@@ -1,10 +1,10 @@
 # ES2-2017-IC1-55-MiniTrader
 
 
-nº60324 Ana Margarida Martins amdlm@iscte-iul.pt
-nº65135 Daniel Silva datsa@iscte-iul.pt
-nº65967 João Pereira jmtrp@iscte-iul.pt
-nº61638 Mário Batalha mjbba@iscte-iul.pt
+nº60324 IC2 Ana Margarida Martins amdlm@iscte-iul.pt
+nº65135 IPLC1 Daniel Silva datsa@iscte-iul.pt
+nº65967 IC1 João Pereira jmtrp@iscte-iul.pt
+nº61638 IB4 Mário Batalha mjbba@iscte-iul.pt
 
 https://youtu.be/PvL4PtCFMSE - link para vídeo miniTrader-AS
 https://youtu.be/HvE5B1Y7JQg - link para vídeo miniTrader-EU
