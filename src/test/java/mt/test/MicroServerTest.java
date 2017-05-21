@@ -150,14 +150,14 @@ public class MicroServerTest {
 		verify(serverComm, atLeastOnce()).sendError(null, "Type was not recognized");
 	}
 	
-//	@Test
-//	public void testStart4() throws Exception {		
-//	when(serverComm.getNextMessage()).thenReturn(msg1).thenReturn(msg10).thenReturn(null);
-//		
-//		ms.start(serverComm);
-//		
-//		verify(serverComm, atLeastOnce()).sendError(msg10.getSenderNickname(), "There was no order in the message");
-//	}
+	@Test
+	public void testStart4() throws Exception {		
+	when(serverComm.getNextMessage()).thenReturn(msg1).thenReturn(msg10).thenReturn(null);
+		
+		ms.start(serverComm);
+		
+		verify(serverComm, atLeastOnce()).sendError(msg10.getSenderNickname(), "There was no order in the message");
+	}
 	
 	@Test
 	public void testStartProcessSellOrder() throws Exception {
