@@ -106,8 +106,12 @@ public class MicroServer implements MicroTraderServer {
 						}
 						
 						if(validateCostumerOrder(msg.getOrder())){
-						notifyAllClients(msg.getOrder());
-						processNewOrder(msg);
+							if (validateSellOrder(msg.getOrder())) {
+								if(restrictOrder(msg.getOrder())){
+								notifyAllClients(msg.getOrder());
+								processNewOrder(msg);
+								}
+							}
 						}
 					} catch (ServerException e) {
 						serverComm.sendError(msg.getSenderNickname(), e.getMessage());
@@ -246,7 +250,7 @@ public class MicroServer implements MicroTraderServer {
 
 		// reset the set of changed orders
 		updatedOrders = new HashSet<>();
-
+		
 	}
 	
 	/**
@@ -372,6 +376,10 @@ public class MicroServer implements MicroTraderServer {
 		}
 	}
 	
+	/**
+	 * This method block the transaction if the seller/buyers is the same
+	 * @return True if the seller and the buyer are not the same persons 
+	 */
 	private boolean validateCostumerOrder(Order order)  {
 		for (Entry<String, Set<Order>> entry : orderMap.entrySet()) {
 			for (Order o : entry.getValue()) {
@@ -383,6 +391,46 @@ public class MicroServer implements MicroTraderServer {
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * This method restricts the number of unfulfilled sell orders to 5
+	 * @return True if the client doesn't have more than 5 unfulfilled sell orders
+	 */
+	private boolean validateSellOrder(Order order) {
+		if (order.isSellOrder()) {
+			String nickname = order.getNickname();
+			for (Entry<String, Set<Order>> entry : orderMap.entrySet()) {
+				if (entry.getKey().equals(nickname)) {
+					System.out.println("Entrei pois: " + entry.getKey() + " é igual a " + nickname + " e a lenght é "
+							+ entry.getValue().size());
+					if (entry.getValue().size() == 5) {
+						serverComm.sendError(order.getNickname(),
+								"You have more than 5 sell orders unfulfilled! Order not valid.");
+						System.out.println("More than 5 sell orders");
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+
+	}
+	
+	
+	/**
+	 * This method restrict the number of units
+	 * @return True if the number of Units of that order equals or is bigger than 10
+	 */
+	private boolean restrictOrder(Order order) {
+		if(order.getNumberOfUnits()<10) {
+			serverComm.sendError(order.getNickname(),
+					"You need at least to have 10 units! Order not valid.");
+			return false;
+		}
+		return true;
+		
+
 	}
 
 }
